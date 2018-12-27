@@ -44,9 +44,16 @@ class App {
 				let response = await axios.request(axiosObj as AxiosRequestConfig)
 				res.json(response.data)
 			} catch (error) {
-				res.status(200).json({
-					data: 'error'
-				})
+				let errorObj = {}
+				if (error.response && error.response.data) {
+					errorObj = error.response.data
+				}
+				else {
+					errorObj = {
+						data: 'api-proxy error'
+					}
+				}
+				res.status(200).json(errorObj)
 			}
 		})
 		this.express.use(bodyParser.urlencoded({ extended: false }));
