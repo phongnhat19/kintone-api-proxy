@@ -37,6 +37,9 @@ class App {
 					axiosObj['data'] = req.body.data
 				}
 			}
+			if (req.body.headers) {
+				axiosObj['headers'] = req.body.headers
+			}
 			try {
 				let response = await axios.request(axiosObj as AxiosRequestConfig)
 				res.json(response.data)
