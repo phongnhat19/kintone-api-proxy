@@ -32,7 +32,10 @@ class App {
 					axiosObj['params'] = req.body.params
 				}
 			}
-			else if (req.body.method === 'POST') {
+			else {
+				if (req.body.params) {
+					axiosObj['params'] = req.body.params
+				}
 				if (req.body.data) {
 					axiosObj['data'] = req.body.data
 				}
