@@ -4,6 +4,7 @@ import * as bodyParser from 'body-parser'
 import axios, {AxiosRequestConfig} from 'axios'
 import * as tunnel from 'tunnel';
 import * as cors from 'cors'
+import * as qs from 'qs'
 
 class App {
 	public express
@@ -33,6 +34,9 @@ class App {
 			if (req.body.method === 'GET') {
 				if (req.body.params) {
 					axiosObj['params'] = req.body.params
+					axiosObj['paramsSerializer'] = (params) => {
+						return qs.stringify(params, {arrayFormat: 'repeat'})
+					}
 				}
 			}
 			else {
