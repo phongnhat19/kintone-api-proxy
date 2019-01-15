@@ -16,7 +16,10 @@ class App {
 	private mountRoutes (): void {
 		const router = express.Router()
 		router.post('/request', async (req: Request, res: Response) => {
-			let kintoneURL = `https://${req.body.domain}/k/v1/${req.body.path}`
+			if (req.body.domain.indexOf('https://') !== 0) {
+				req.body.domain = `https://${req.body.domain}`
+			}
+			let kintoneURL = `${req.body.domain}/k/v1/${req.body.path}`
 			let axiosObj = {
 				method: req.body.method,
 				url:kintoneURL
@@ -52,6 +55,7 @@ class App {
 					errorObj = error.response.data
 				}
 				else {
+					console.log(axiosObj)
 					errorObj = {
 						data: 'api-proxy error'
 					}
